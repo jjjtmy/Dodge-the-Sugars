@@ -1,10 +1,23 @@
 //THINGS TO DO:
-// push to github - branch vs commit (1)
 // polishing up the end game UI state and score value (1)
 // creation of utility functions, better state objects, repeated code can be a function (cleanup 1)
 //adjust speed with each level - create user selection and link to speed (1)
 //add confetti (0.5)
-// presentation: offsets - weigh pro and con, challenges
+// presentation: offsets - weigh pro and con, challenges etc
+
+// const sugarsList = [
+//   {
+//     id: 1,
+//     name: 'lollipop',
+//     emoji: '🍭',
+//     points: 100,
+//     speedRange: [50,100]
+//   }
+// ]
+// function randomPick(list) {
+//  return list[parseInt(Math.random() * list.length)];
+// }
+// randomPick(sugarsList)
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -143,8 +156,6 @@ function startGame() {
 
   healthScore = 100;
   document.querySelector("h4").innerHTML = `Health: ${healthScore}`;
-
-  // startTimer();
 }
 startGame();
 
@@ -153,20 +164,6 @@ let nonSugars = [];
 let theSugars = [];
 let speed = 5;
 let isGameover = false;
-
-// const sugarsList = [
-//   {
-//     id: 1,
-//     name: 'lollipop',
-//     emoji: '🍭',
-//     points: 100,
-//     speedRange: [50,100]
-//   }
-// ]
-// function randomPick(list) {
-//  return list[parseInt(Math.random() * list.length)];
-// }
-// randomPick(sugarsList)
 
 setInterval(createSugars, 1000);
 function createSugars() {
@@ -247,13 +244,13 @@ animate();
 
 /*GAMEOVER*/
 function handleGameover() {
-  document.getElementById("gameover").innerHTML = "You lose!";
+  isGameover = true;
+  document.getElementById("gameover").innerHTML = " You lose! ";
   document.getElementById("gameover").style.display = "block";
   document.getElementById("gameover").style.position = "fixed";
-  document.getElementById("gameover").style.height = "50%";
-  document.getElementById("gameover").style.width = "80%";
   document.getElementById("gameover").style.background = "pink";
-  document.getElementById("gameover").style.fontSize = " 50px";
+  document.getElementById("gameover").style.fontSize = " 100px";
+  document.getElementById("gameover").style.textAlign = "center";
 }
 
 /* RESTART*/
@@ -345,13 +342,12 @@ function countdown(time) {
       clearInterval(timerID);
       if (countdownEl.innerHTML === "0:00" && healthScore > 0) {
         isGameover = true;
-        document.getElementById("gameover").innerHTML = "You win!";
+        document.getElementById("gameover").innerHTML = " You win! ";
         document.getElementById("gameover").style.display = "block";
         document.getElementById("gameover").style.position = "fixed";
-        document.getElementById("gameover").style.height = "50%";
-        document.getElementById("gameover").style.width = "80%";
         document.getElementById("gameover").style.background = "pink";
-        document.getElementById("gameover").style.fontSize = " 50px";
+        document.getElementById("gameover").style.fontSize = " 100px";
+        document.getElementById("gameover").style.textAlign = "center";
       } else {
         return;
       }

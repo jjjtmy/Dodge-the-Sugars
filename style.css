@@ -1,33 +1,79 @@
 h1 {
+  font-family: "Bungee", sans-serif;
   display: flex;
   justify-content: center;
 }
 
 body {
+  background-color: rgb(245, 221, 255);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#health {
+#healthSection {
+  position: absolute;
+  top: 100px;
+  right: 50px;
   display: flex;
-  flex-direction: column;
+  color: white;
+  font-family: "Bungee", sans-serif;
   align-items: flex-end;
+  justify-content: flex-end;
+}
+
+#time {
+  position: absolute;
+  top: 40px;
+  right: 0px;
+}
+
+h4: {
+  margin: 5px;
+}
+
+progress {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 150px;
+  height: 20px;
+  border: 2px solid yellow;
+}
+
+progress::-webkit-progress-bar {
+  background-color: red;
+}
+
+progress::-webkit-progress-value {
+  background-color: rgb(123, 255, 123);
 }
 
 canvas {
   width: 1000px;
   height: 500px;
   border: 1px solid grey;
-  background: turquoise;
+  background: repeating-linear-gradient(
+    -45deg,
+    #6351dc 0px,
+    #6656cf 5px,
+    #6c5bdf 6px,
+    #7c69f7 11px,
+    #9086d4 12px
+  );
   justify-content: center;
 }
 
 #gameover {
+  font-family: "Bungee", sans-serif;
   display: none;
 }
 
 button {
+  font-family: "Bungee", sans-serif;
   margin: 10px;
+  color: white;
+  background-color: #1f01d6;
+  border-radius: 20%;
 }
