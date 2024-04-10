@@ -56,6 +56,7 @@ progress {
   width: 150px;
   height: 20px;
   border: 2px solid yellow;
+  display: none;
 }
 
 progress::-webkit-progress-bar {

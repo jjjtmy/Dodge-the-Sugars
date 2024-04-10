@@ -302,6 +302,7 @@ function startGame() {
   players.push(mainPlayer);
 
   healthScore.value = 100;
+  healthScore.style.display = "block";
   document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
   countdown(20);
 
