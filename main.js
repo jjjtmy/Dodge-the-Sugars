@@ -19,6 +19,25 @@
 // }
 // randomPick(sugarsList)
 
+let mainPlayer;
+let changePoint = 50;
+let nonSugars = [];
+let theSugars = [];
+let speed = 5;
+let isGameover = false;
+let players = [];
+let is_dragging = false;
+let curPlIndex = null;
+let startX, startY;
+let sugarList = ["🍭", "🍬", "🍪"];
+let nonSugarList = ["🍅", "🥦", "🥕"];
+let horiSides = [0, 500];
+let verSides = [0, 1000];
+
+let gameOverDiv = document.getElementById("gameover");
+let healthScore = document.querySelector("progress");
+let scoreDisplay = document.querySelector("h4");
+
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 /* FIX OFFSET*/
@@ -114,7 +133,6 @@ class Player {
     this.draw();
   }
 }
-
 class nonSugar extends Player {
   constructor(text, x, y, angle, speed) {
     super(text, x, y);
@@ -124,7 +142,6 @@ class nonSugar extends Player {
     this.dy = 1 * this.speed;
   }
 }
-
 class Sugar extends Player {
   constructor(text, x, y, angle, speed) {
     super(text, x, y);
@@ -144,56 +161,41 @@ function initialize() {
 }
 initialize();
 
-let tomatoes = [];
-let candies = [];
-let mainPlayer;
-let healthScore = document.querySelector("progress").value;
-let changePoint = 50;
-
 /* START GAME*/
 function startGame() {
-  const x = canvas.width / 2;
-  const y = canvas.height / 2;
-  mainPlayer = new Player("😀", x, y);
+  mainPlayer = new Player("😀", canvas.width / 2, canvas.height / 2);
+  players.push(mainPlayer);
 
-  healthScore = 100;
-  document.querySelector("h4").innerHTML = `Health: ${healthScore}`;
+  healthScore.value = 100;
+  document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
 }
 startGame();
 
-//randomise start points and direction
-let nonSugars = [];
-let theSugars = [];
-let speed = 5;
-let isGameover = false;
-
 setInterval(createSugars, 1000);
 function createSugars() {
-  let sugarList = ["🍭", "🍬", "🍪"];
   let randomSugar = sugarList[parseInt(Math.random() * 3)];
   let randomX = Math.random() * canvas.width;
   let randomY = Math.random() * canvas.height;
   let randomAngle = Math.random() * 360;
-  let horiSides = [100, 500];
   let fixedY = horiSides[parseInt(Math.random() * 2)];
-  let verSides = [0, 1000];
   let fixedX = verSides[parseInt(Math.random() * 2)];
 
   theSugars.push(new Sugar(randomSugar, fixedX, randomY, randomAngle, speed));
+  console.log(theSugars[theSugars.length - 1]);
+  theSugars[theSugars.length - 1].draw();
+
+  theSugars.push(new Sugar(randomSugar, randomX, fixedY, randomAngle, speed));
   console.log(theSugars[theSugars.length - 1]);
   theSugars[theSugars.length - 1].draw();
 }
 
 setInterval(createNonSugars, 1000);
 function createNonSugars() {
-  let nonSugarList = ["🍅", "🥦", "🥕"];
   let randomNonSugar = nonSugarList[parseInt(Math.random() * 3)];
   let randomX = Math.random() * canvas.width;
   let randomY = Math.random() * canvas.height;
   let randomAngle = Math.random() * 360;
-  let horiSides = [100, 500];
   let fixedY = horiSides[parseInt(Math.random() * 2)];
-  let verSides = [0, 1000];
   let fixedX = verSides[parseInt(Math.random() * 2)];
 
   nonSugars.push(
@@ -201,9 +203,13 @@ function createNonSugars() {
   );
   console.log(nonSugars[nonSugars.length - 1]);
   nonSugars[nonSugars.length - 1].draw();
-}
 
-/* ANIMATE FOOD*/
+  nonSugars.push(
+    new nonSugar(randomNonSugar, randomX, fixedY, randomAngle, speed)
+  );
+  console.log(nonSugars[nonSugars.length - 1]);
+  nonSugars[nonSugars.length - 1].draw();
+}
 function animate(step) {
   initialize();
   mainPlayer.draw();
@@ -211,12 +217,10 @@ function animate(step) {
   if (!isGameover) {
     nonSugars.forEach(function (ns, nsIndex) {
       ns.update();
-      if (mainPlayer.checkCollision(ns) && healthScore < 100) {
+      if (mainPlayer.checkCollision(ns) && healthScore.value < 100) {
         nonSugars.splice(nsIndex, 1);
-        document
-          .querySelector("progress")
-          .setAttribute("value", (healthScore += changePoint));
-        document.querySelector("h4").innerHTML = `Health: ${healthScore}`;
+        healthScore.setAttribute("value", (healthScore.value += changePoint));
+        scoreDisplay.innerHTML = `Health: ${healthScore.value}`;
       }
     });
 
@@ -224,49 +228,37 @@ function animate(step) {
       sug.update();
       if (mainPlayer.checkCollision(sug)) {
         theSugars.splice(sugIndex, 1);
-        document
-          .querySelector("progress")
-          .setAttribute("value", (healthScore -= changePoint));
-        document.querySelector("h4").innerHTML = `Health: ${healthScore}`;
+        healthScore.setAttribute("value", (healthScore.value -= changePoint));
+        scoreDisplay.innerHTML = `Health: ${healthScore.value}`;
       }
     });
   }
 
-  if (healthScore <= 0) {
-    document.querySelector("progress").setAttribute("value", (healthScore = 0));
-    document.querySelector("h4").innerHTML = `Health: ${healthScore}`;
+  if (healthScore.value <= 0) {
+    healthScore.setAttribute("value", (healthScore.value = 0));
+    scoreDisplay.innerHTML = `Health: ${healthScore.value}`;
     isGameover = true;
     handleGameover();
   }
 
   requestAnimationFrame(animate);
 }
-
 animate();
 
-/*GAMEOVER*/
 function handleGameover() {
   isGameover = true;
-  document.getElementById("gameover").innerHTML = " You lose! ";
-  document.getElementById("gameover").style.display = "block";
-  document.getElementById("gameover").style.position = "fixed";
-  document.getElementById("gameover").style.background = "pink";
-  document.getElementById("gameover").style.fontSize = " 100px";
-  document.getElementById("gameover").style.textAlign = "center";
+  gameOverDiv.innerHTML = " You lose! ";
+  gameOverDiv.style.display = "block";
+  gameOverDiv.style.position = "fixed";
+  gameOverDiv.style.background = "pink";
+  gameOverDiv.style.fontSize = " 100px";
+  gameOverDiv.style.textAlign = "center";
 }
 
-/* RESTART*/
 document.querySelector("button").addEventListener("click", restart);
 function restart() {
   location.reload();
 }
-
-/* MOVE PLAYER*/
-let players = [];
-players.push(mainPlayer);
-let is_dragging = false;
-let curPlIndex = null;
-let startX, startY;
 
 function isMouseInPlayer(x, y, pl) {
   if (
@@ -342,14 +334,14 @@ function countdown(time) {
     time--;
     if (countdownEl.innerHTML === "0:00") {
       clearInterval(timerID);
-      if (countdownEl.innerHTML === "0:00" && healthScore > 0) {
+      if (countdownEl.innerHTML === "0:00" && healthScore.value > 0) {
         isGameover = true;
-        document.getElementById("gameover").innerHTML = " You win! ";
-        document.getElementById("gameover").style.display = "block";
-        document.getElementById("gameover").style.position = "fixed";
-        document.getElementById("gameover").style.background = "pink";
-        document.getElementById("gameover").style.fontSize = " 100px";
-        document.getElementById("gameover").style.textAlign = "center";
+        gameOverDiv.innerHTML = " You win! ";
+        gameOverDiv.style.display = "block";
+        gameOverDiv.style.position = "fixed";
+        gameOverDiv.style.background = "pink";
+        gameOverDiv.style.fontSize = " 100px";
+        gameOverDiv.style.textAlign = "center";
       } else {
         return;
       }
