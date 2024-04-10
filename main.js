@@ -54,10 +54,10 @@ class Player {
   //getter
 
   getTop() {
-    return this.y + this.emoji;
+    return this.y;
   }
   getBtm() {
-    return this.y + 2 * this.emoji;
+    return this.y + this.emoji;
   }
   getLeft() {
     return this.x;
@@ -147,6 +147,23 @@ let candies = [];
 let mainPlayer;
 let healthScore = document.querySelector("progress").value;
 let changePoint = 50;
+
+// let countDown = document.getElementById("countDown");
+// let countDowmNum = document.getElementById("countDownNum");
+
+// function gameCountdown() {
+//   for (let i = 3; i >= 0; i--) {
+//     setTimeout(() => {
+//       countDowmNum.textContent = i;
+//       if (i === 0) {
+//         countDown.style.display = "none";
+//         //  startGame();
+//       }
+//     }, (3 - i) * 1000);
+//   }
+// }
+
+// gameCountdown();
 
 /* START GAME*/
 function startGame() {
