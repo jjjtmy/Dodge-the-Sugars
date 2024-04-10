@@ -1,7 +1,7 @@
 //THINGS TO DO:
-// polishing up the end game UI state and score value (1)
-// creation of utility functions, better state objects, repeated code can be a function (cleanup 1)
 //adjust speed with each level - create user selection and link to speed (1)
+// add score value (1)
+// creation of utility functions, better state objects, repeated code can be a function (cleanup 1)
 //add confetti (0.5)
 // presentation: offsets - weigh pro and con, challenges etc
 
@@ -23,7 +23,7 @@ let mainPlayer;
 let changePoint = 50;
 let nonSugars = [];
 let theSugars = [];
-let speed = 5;
+let speed;
 let isGameover = false;
 let players = [];
 let is_dragging = false;
@@ -37,6 +37,9 @@ let verSides = [0, 1000];
 let gameOverDiv = document.getElementById("gameover");
 let healthScore = document.querySelector("progress");
 let scoreDisplay = document.querySelector("h4");
+const countdownEl = document.getElementById("time");
+let levelDiv = document.getElementById("level");
+let levelForm = document.getElementById("levelForm");
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -152,26 +155,23 @@ class Sugar extends Player {
   }
 }
 
-//
+// UTILITY FUNCTIONS
 
-/* INITIALISE*/
-function initialize() {
-  canvas.width = canvas.clientWidth; //set canvasWidth = clientWidth
-  canvas.height = canvas.clientHeight; //set canvasHeight = clientHeight
+function handleLevelSubmit(e) {
+  e.preventDefault();
+  const level = e.target.levelSelect.value;
+  if (level === "easy") {
+    speed = "3";
+  } else if (level === "normal") {
+    speed = "5";
+  } else if (level === "hard") {
+    speed = "8";
+  }
+
+  levelDiv.style.display = "none";
+
+  startGame();
 }
-initialize();
-
-/* START GAME*/
-function startGame() {
-  mainPlayer = new Player("😀", canvas.width / 2, canvas.height / 2);
-  players.push(mainPlayer);
-
-  healthScore.value = 100;
-  document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
-}
-startGame();
-
-setInterval(createSugars, 1000);
 function createSugars() {
   let randomSugar = sugarList[parseInt(Math.random() * 3)];
   let randomX = Math.random() * canvas.width;
@@ -188,8 +188,6 @@ function createSugars() {
   console.log(theSugars[theSugars.length - 1]);
   theSugars[theSugars.length - 1].draw();
 }
-
-setInterval(createNonSugars, 1000);
 function createNonSugars() {
   let randomNonSugar = nonSugarList[parseInt(Math.random() * 3)];
   let randomX = Math.random() * canvas.width;
@@ -210,8 +208,17 @@ function createNonSugars() {
   console.log(nonSugars[nonSugars.length - 1]);
   nonSugars[nonSugars.length - 1].draw();
 }
+function handleGameover() {
+  isGameover = true;
+  gameOverDiv.innerHTML = " You lose! ";
+  gameOverDiv.style.display = "block";
+  gameOverDiv.style.position = "fixed";
+  gameOverDiv.style.background = "pink";
+  gameOverDiv.style.fontSize = " 100px";
+  gameOverDiv.style.textAlign = "center";
+}
 function animate(step) {
-  initialize();
+  getBoard();
   mainPlayer.draw();
 
   if (!isGameover) {
@@ -243,21 +250,58 @@ function animate(step) {
 
   requestAnimationFrame(animate);
 }
-animate();
-
-function handleGameover() {
-  isGameover = true;
-  gameOverDiv.innerHTML = " You lose! ";
-  gameOverDiv.style.display = "block";
-  gameOverDiv.style.position = "fixed";
-  gameOverDiv.style.background = "pink";
-  gameOverDiv.style.fontSize = " 100px";
-  gameOverDiv.style.textAlign = "center";
+function countdown(time) {
+  let timerID = setInterval(function () {
+    const minutes = 0;
+    let seconds = time % 60;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    countdownEl.innerHTML = `${minutes}:${seconds}`;
+    time--;
+    if (countdownEl.innerHTML === "0:00") {
+      clearInterval(timerID);
+      if (countdownEl.innerHTML === "0:00" && healthScore.value > 0) {
+        isGameover = true;
+        gameOverDiv.innerHTML = " You win! ";
+        gameOverDiv.style.display = "block";
+        gameOverDiv.style.position = "fixed";
+        gameOverDiv.style.background = "pink";
+        gameOverDiv.style.fontSize = " 100px";
+        gameOverDiv.style.textAlign = "center";
+      } else {
+        return;
+      }
+    }
+  }, 1000);
 }
-
-document.querySelector("button").addEventListener("click", restart);
 function restart() {
   location.reload();
+}
+
+//EVENT LISTENERS
+levelForm.addEventListener("submit", handleLevelSubmit);
+
+document.querySelector("button").addEventListener("click", restart);
+
+/* INITIALISE*/
+function getBoard() {
+  canvas.width = canvas.clientWidth; //set canvasWidth = clientWidth
+  canvas.height = canvas.clientHeight; //set canvasHeight = clientHeight
+}
+getBoard();
+
+/* START GAME*/
+function startGame() {
+  mainPlayer = new Player("😀", canvas.width / 2, canvas.height / 2);
+  players.push(mainPlayer);
+
+  healthScore.value = 100;
+  document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
+  countdown(20);
+
+  setInterval(createSugars, 1000);
+  setInterval(createNonSugars, 1000);
+
+  animate();
 }
 
 function isMouseInPlayer(x, y, pl) {
@@ -324,32 +368,6 @@ canvas.onmouseup = mouse_up;
 canvas.onmouseout = mouse_out;
 canvas.onmousemove = mouse_move;
 
-const countdownEl = document.getElementById("time");
-function countdown(time) {
-  let timerID = setInterval(function () {
-    const minutes = 0;
-    let seconds = time % 60;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    countdownEl.innerHTML = `${minutes}:${seconds}`;
-    time--;
-    if (countdownEl.innerHTML === "0:00") {
-      clearInterval(timerID);
-      if (countdownEl.innerHTML === "0:00" && healthScore.value > 0) {
-        isGameover = true;
-        gameOverDiv.innerHTML = " You win! ";
-        gameOverDiv.style.display = "block";
-        gameOverDiv.style.position = "fixed";
-        gameOverDiv.style.background = "pink";
-        gameOverDiv.style.fontSize = " 100px";
-        gameOverDiv.style.textAlign = "center";
-      } else {
-        return;
-      }
-    }
-  }, 1000);
-}
-countdown(20);
-
 // let countDown = document.getElementById("countDown");
 // let countDowmNum = document.getElementById("countDownNum");
 
@@ -364,7 +382,7 @@ countdown(20);
 //     }, (3 - i) * 1000);
 //   }
 // }
-//   gameCountdown();
+// gameCountdown();
 
 // Variables:
 // Health

@@ -16,13 +16,34 @@
   <h1>🍭🍬🍪 Dodge the Sugars! 🍅🥦🥕</h1>
 
   <body>
+    <!-- Health Section -->
     <div id="healthSection">
       <div id="time"></div>
       <h4></h4>
       <progress value="100" max="100" id="health"></progress>
     </div>
+    <!-- Choose level -->
+    <div id="level">
+      <p>Choose Your Level</p>
+      <form id="levelForm">
+        <div class="selectWrapper">
+          <select id="levelSelect">
+            <option value="easy">Easy</option>
+            <option value="normal">Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <input id="start" type="submit" value="Start" />
+      </form>
+    </div>
+    <!-- Countdown to Game -->
+    <div id="countDown"><span id="countDownNum"></span></div>
+    <!-- Canvas -->
     <canvas id="myCanvas"></canvas>
+    <!-- Restart -->
     <button>Restart</button>
+    <!-- Game Over -->
     <div id="gameover"></div>
   </body>
 </html>

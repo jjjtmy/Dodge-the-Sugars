@@ -94,11 +94,79 @@ button {
   border-radius: 20%;
 }
 
+#level {
+  font-family: "Bungee", sans-serif;
+  filter: none;
+  position: absolute;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  text-align: center;
+  background: #fdf8e6;
+  padding: 20px;
+  z-index: 999;
+  font-size: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+  #level {
+    width: 70%;
+  }
+}
+#level .selectWrapper {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+#level .selectWrapper::after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  top: calc(50% - 5px);
+  right: 25px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  transform: rotate(45deg) translateY(-50%);
+  pointer-events: none;
+}
+#level select {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+#level select:focus {
+  outline-color: #f2b705;
+}
+
+#start {
+  font-family: "Bungee", sans-serif;
+  text-transform: uppercase;
+  border: none;
+  background: #f2b705;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 80%;
+  margin-top: 20px;
+}
+
 /* #countDown {
   font: "Bungee", sans-serif;
   position: absolute;
-  display: none;
-  justify-content: center;
+  /* display: none; */
+/* justify-content: center;
   align-items: center;
   top: 50%;
   left: 50%;
@@ -112,5 +180,4 @@ button {
 @media screen and (min-width: 768px) {
   #countDown {
     font-size: 200px;
-  }
-} */
+  } */
