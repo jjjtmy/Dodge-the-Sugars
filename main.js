@@ -209,12 +209,11 @@ function createNonSugars() {
 }
 
 const jsConfetti = new JSConfetti({ canvas });
+const throwConfetti = setTimeout(triggerConfetti, 300);
 function triggerConfetti() {
-  setTimeout(() => {
-    jsConfetti.addConfetti({
-      emojis: ["😀", "🍭", "🍬", "🍪", "🍅", "🥦", "🥕"],
-    });
-  }, 500);
+  jsConfetti.addConfetti({
+    emojis: ["😀", "🍭", "🍬", "🍪", "🍅", "🥦", "🥕"],
+  });
 }
 
 function handleGameover() {
@@ -225,7 +224,6 @@ function handleGameover() {
   gameOverDiv.style.background = "pink";
   gameOverDiv.style.fontSize = " 100px";
   gameOverDiv.style.textAlign = "center";
-  triggerConfetti();
 }
 function animate(step) {
   getBoard();
