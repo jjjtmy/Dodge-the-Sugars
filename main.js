@@ -1,5 +1,4 @@
 //THINGS TO DO:
-//adjust speed with each level - create user selection and link to speed (1)
 // add score value (1)
 // creation of utility functions, better state objects, repeated code can be a function (cleanup 1)
 //add confetti (0.5)
@@ -208,6 +207,16 @@ function createNonSugars() {
   console.log(nonSugars[nonSugars.length - 1]);
   nonSugars[nonSugars.length - 1].draw();
 }
+
+const jsConfetti = new JSConfetti({ canvas });
+function triggerConfetti() {
+  setTimeout(() => {
+    jsConfetti.addConfetti({
+      emojis: ["😀", "🍭", "🍬", "🍪", "🍅", "🥦", "🥕"],
+    });
+  }, 500);
+}
+
 function handleGameover() {
   isGameover = true;
   gameOverDiv.innerHTML = " You lose! ";
@@ -216,6 +225,7 @@ function handleGameover() {
   gameOverDiv.style.background = "pink";
   gameOverDiv.style.fontSize = " 100px";
   gameOverDiv.style.textAlign = "center";
+  triggerConfetti();
 }
 function animate(step) {
   getBoard();
@@ -244,7 +254,6 @@ function animate(step) {
   if (healthScore.value <= 0) {
     healthScore.setAttribute("value", (healthScore.value = 0));
     scoreDisplay.innerHTML = `Health: ${healthScore.value}`;
-    isGameover = true;
     handleGameover();
   }
 
@@ -425,4 +434,4 @@ canvas.onmousemove = mouse_move;
 // player goes to the middle
 // no food items flying
 
-//-----------------------------------------------------------
+//-------------------------------------------------------
