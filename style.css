@@ -5,12 +5,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: calc(100vh - 50px);
-}
-@media screen and (min-width: 768px) {
-  body {
-    height: calc(100vh - 63px);
-  }
+  height: calc(100vh - 100px);
 }
 
 h1 {
@@ -99,7 +94,7 @@ button {
   font-family: "Bungee", sans-serif;
   filter: none;
   position: absolute;
-  width: 90%;
+  width: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -107,33 +102,9 @@ button {
   text-align: center;
   background: #fdf8e6;
   padding: 20px;
-  z-index: 999;
   font-size: 1.5rem;
 }
-@media screen and (min-width: 768px) {
-  #level {
-    width: 70%;
-  }
-}
-#level .selectWrapper {
-  position: relative;
-  width: 50%;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-#level .selectWrapper::after {
-  content: "";
-  position: absolute;
-  display: inline-block;
-  top: calc(50% - 5px);
-  right: 25px;
-  width: 8px;
-  height: 8px;
-  border-bottom: 2px solid #ccc;
-  border-right: 2px solid #ccc;
-  transform: rotate(45deg) translateY(-50%);
-  pointer-events: none;
-}
+
 #level select {
   width: 100%;
   margin: 0 auto;
@@ -162,23 +133,3 @@ button {
   width: 80%;
   margin-top: 20px;
 }
-
-/* #countDown {
-  font: "Bungee", sans-serif;
-  position: absolute;
-  /* display: none; */
-/* justify-content: center;
-  align-items: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  text-align: center;
-  z-index: 999;
-  font-size: 100px;
-  font-weight: bold;
-}
-@media screen and (min-width: 768px) {
-  #countDown {
-    font-size: 200px;
-  } */
