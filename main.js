@@ -1,5 +1,5 @@
 let mainPlayer;
-let changePoint = 50;
+let changePoint = 25;
 let nonSugars = [];
 let theSugars = [];
 let speed;
@@ -284,7 +284,7 @@ function startGame() {
   healthScore.value = 100;
   healthScore.style.display = "block";
   document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
-  countdown(20);
+  countdown(30);
 
   setInterval(createSugars, 1000);
   setInterval(createNonSugars, 1000);
