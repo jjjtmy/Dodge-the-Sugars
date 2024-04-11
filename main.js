@@ -1,7 +1,7 @@
 //THINGS TO DO:
 // add score value (1)
 // creation of utility functions, better state objects, repeated code can be a function (cleanup 1)
-//add confetti (0.5)
+
 // presentation: offsets - weigh pro and con, challenges etc
 
 // const sugarsList = [
@@ -36,9 +36,9 @@ let verSides = [0, 1000];
 let gameOverDiv = document.getElementById("gameover");
 let healthScore = document.querySelector("progress");
 let scoreDisplay = document.querySelector("h4");
-const countdownEl = document.getElementById("time");
 let levelDiv = document.getElementById("level");
 let levelForm = document.getElementById("levelForm");
+const countdownEl = document.getElementById("time");
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -209,7 +209,6 @@ function createNonSugars() {
 }
 
 const jsConfetti = new JSConfetti({ canvas });
-const throwConfetti = setTimeout(triggerConfetti, 300);
 function triggerConfetti() {
   jsConfetti.addConfetti({
     emojis: ["😀", "🍭", "🍬", "🍪", "🍅", "🥦", "🥕"],
@@ -224,6 +223,7 @@ function handleGameover() {
   gameOverDiv.style.background = "pink";
   gameOverDiv.style.fontSize = " 100px";
   gameOverDiv.style.textAlign = "center";
+  setTimeout(triggerConfetti, 300);
 }
 function animate(step) {
   getBoard();
@@ -332,6 +332,7 @@ let mouse_down = function (event) {
     if (isMouseInPlayer(startX, startY, pl)) {
       is_dragging = true;
       curPlIndex = index;
+      canvas.style.cursor = "grabbing";
       return;
     } else {
     }
@@ -342,6 +343,8 @@ let mouse_up = function (event) {
   if (!is_dragging) {
     return;
   }
+
+  canvas.style.cursor = "default";
   event.preventDefault();
   is_dragging = false;
 };
