@@ -55,10 +55,10 @@ class Player {
   //getter
 
   getTop() {
-    return this.y + this.emoji;
+    return this.y;
   }
   getBtm() {
-    return this.y + 2 * this.emoji;
+    return this.y + this.emoji;
   }
   getLeft() {
     return this.x;
@@ -142,9 +142,9 @@ function handleLevelSubmit(e) {
   if (level === "easy") {
     speed = "3";
   } else if (level === "normal") {
-    speed = "5";
+    speed = "4";
   } else if (level === "hard") {
-    speed = "8";
+    speed = "5";
   }
 
   levelDiv.style.display = "none";
@@ -286,8 +286,8 @@ function startGame() {
   document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
   countdown(30);
 
-  setInterval(createSugars, 1000);
-  setInterval(createNonSugars, 1000);
+  setInterval(createSugars, 500);
+  setInterval(createNonSugars, 500);
 
   animate();
 }
