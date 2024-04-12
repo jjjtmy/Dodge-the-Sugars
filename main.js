@@ -159,11 +159,13 @@ function createSugars() {
   let fixedY = horiSides[parseInt(Math.random() * 2)];
   let fixedX = verSides[parseInt(Math.random() * 2)];
 
-  theSugars.push(new Sugar(randomSugar, fixedX, randomY, randomAngle, speed));
-  theSugars[theSugars.length - 1].draw();
+  if (!isGameover) {
+    theSugars.push(new Sugar(randomSugar, fixedX, randomY, randomAngle, speed));
+    theSugars[theSugars.length - 1].draw();
 
-  theSugars.push(new Sugar(randomSugar, randomX, fixedY, randomAngle, speed));
-  theSugars[theSugars.length - 1].draw();
+    theSugars.push(new Sugar(randomSugar, randomX, fixedY, randomAngle, speed));
+    theSugars[theSugars.length - 1].draw();
+  }
 }
 function createNonSugars() {
   let randomNonSugar = nonSugarList[parseInt(Math.random() * 3)];
@@ -173,17 +175,17 @@ function createNonSugars() {
   let fixedY = horiSides[parseInt(Math.random() * 2)];
   let fixedX = verSides[parseInt(Math.random() * 2)];
 
-  nonSugars.push(
-    new nonSugar(randomNonSugar, fixedX, randomY, randomAngle, speed)
-  );
-  console.log(nonSugars[nonSugars.length - 1]);
-  nonSugars[nonSugars.length - 1].draw();
+  if (!isGameover) {
+    nonSugars.push(
+      new nonSugar(randomNonSugar, fixedX, randomY, randomAngle, speed)
+    );
+    nonSugars[nonSugars.length - 1].draw();
 
-  nonSugars.push(
-    new nonSugar(randomNonSugar, randomX, fixedY, randomAngle, speed)
-  );
-  console.log(nonSugars[nonSugars.length - 1]);
-  nonSugars[nonSugars.length - 1].draw();
+    nonSugars.push(
+      new nonSugar(randomNonSugar, randomX, fixedY, randomAngle, speed)
+    );
+    nonSugars[nonSugars.length - 1].draw();
+  }
 }
 
 const jsConfetti = new JSConfetti({ canvas });
@@ -243,7 +245,7 @@ function countdown(time) {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     countdownEl.innerHTML = `${minutes}:${seconds}`;
     time--;
-    if (!isGameover) {
+    if (isGameover) {
       clearInterval(timerID);
     } else if (countdownEl.innerHTML === "0:00") {
       clearInterval(timerID);
