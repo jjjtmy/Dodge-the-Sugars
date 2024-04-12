@@ -160,11 +160,9 @@ function createSugars() {
   let fixedX = verSides[parseInt(Math.random() * 2)];
 
   theSugars.push(new Sugar(randomSugar, fixedX, randomY, randomAngle, speed));
-  console.log(theSugars[theSugars.length - 1]);
   theSugars[theSugars.length - 1].draw();
 
   theSugars.push(new Sugar(randomSugar, randomX, fixedY, randomAngle, speed));
-  console.log(theSugars[theSugars.length - 1]);
   theSugars[theSugars.length - 1].draw();
 }
 function createNonSugars() {
@@ -233,6 +231,7 @@ function animate(step) {
     healthScore.setAttribute("value", (healthScore.value = 0));
     scoreDisplay.innerHTML = `Health: ${healthScore.value}`;
     handleGameover();
+    return;
   }
 
   requestAnimationFrame(animate);
@@ -244,7 +243,9 @@ function countdown(time) {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     countdownEl.innerHTML = `${minutes}:${seconds}`;
     time--;
-    if (countdownEl.innerHTML === "0:00") {
+    if (!isGameover) {
+      clearInterval(timerID);
+    } else if (countdownEl.innerHTML === "0:00") {
       clearInterval(timerID);
       if (countdownEl.innerHTML === "0:00" && healthScore.value > 0) {
         isGameover = true;
@@ -254,6 +255,7 @@ function countdown(time) {
         gameOverDiv.style.background = "pink";
         gameOverDiv.style.fontSize = " 100px";
         gameOverDiv.style.textAlign = "center";
+        setTimeout(triggerConfetti, 300);
       } else {
         return;
       }
@@ -286,8 +288,8 @@ function startGame() {
   document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
   countdown(30);
 
-  setInterval(createSugars, 500);
-  setInterval(createNonSugars, 500);
+  setInterval(createSugars, 300);
+  setInterval(createNonSugars, 800);
 
   animate();
 }
