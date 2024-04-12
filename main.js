@@ -281,7 +281,7 @@ function startGame() {
   mainPlayer = new Player("😀", canvas.width / 2, canvas.height / 2);
   players.push(mainPlayer);
 
-  healthScore.value = 100;
+  healthScore.value = 50;
   healthScore.style.display = "block";
   document.querySelector("h4").innerHTML = `Health: ${healthScore.value}`;
   countdown(30);
