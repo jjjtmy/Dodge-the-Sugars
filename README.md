@@ -25,7 +25,7 @@ Win/lose state<br>
 
 # Challenges & Key Learnings
 
-The difficulty encountered in constructing this JavaScript game arose from its length and disorderliness. To address this issue, I implemented utility functions to streamline repetitive code segments and organized lengthy code blocks into separate functions (e.g. createSugars, handleGameover, countdown).
+The difficulty encountered in constructing this JavaScript game arose from its length and disorderliness. To address this issue, I implemented utility functions to streamline repetitive code segments and organized lengthy code blocks into separate functions (e.g. Handlelevelsubmit > startgame > createSugars).
 
 To navigate unfamiliar JavaScript functions like incorporating mouse events and progress bars, I tackled the challenge by conducting research online and experimenting with trial and error within my own code.
 
