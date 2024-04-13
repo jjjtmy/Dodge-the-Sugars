@@ -16,7 +16,7 @@ Play view<br>
 ![Untitled design](https://github.com/jjjtmy/Dodge-the-Sugars/assets/155456605/dcbb21a7-aa5e-4579-b59a-cc3e31a894c8)
 
 Win/lose state<br>
-![loaw 1](https://github.com/jjjtmy/Dodge-the-Sugars/assets/155456605/94dd8637-2c32-41a2-918a-42d1979139ef)
+![Screenshot 2024-04-13 at 11 41 46 AM](https://github.com/jjjtmy/Dodge-the-Sugars/assets/155456605/e868d637-17a9-412b-af5d-3bcdf593ada9)
 
 
 # Technologies used
